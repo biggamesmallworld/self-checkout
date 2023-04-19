@@ -31,11 +31,10 @@ const App = () => {
         let totalCost = cart.total * 100, // stripe only reads in cents
             targetEndpoint = `http://localhost:8888/wp-marty/wp-json/wps_manual_checkout_routes/v1/create_payment_intent?total_cost=${totalCost}`
             
-  
         axios.get(targetEndpoint)
             .then(res => {
                 setClientSecret(JSON.parse(res.data).client_secret)
-                setShowPayment(true)
+                setShowPayment(!showPayment)
             })
             .catch(err => {
                 console.error(err)
@@ -61,7 +60,7 @@ const App = () => {
                         <Button className="my-3 btn-secondary mr-3" onClick={(event) => refresh(event)}>Refresh</Button>
                         {showPayment ?
                             <>
-                                <Button onClick={(event) => setShowPayment(false)}>Back</Button>
+                                <Button onClick={(event) => setShowPayment(!showPayment)}>Back</Button>
                                 {(clientSecret !== "") ? 
                                     <StripePurchase 
                                         stripePromise={stripePromise} 
@@ -88,7 +87,6 @@ const App = () => {
                                                         itemIndex={index}
                                                         item={product} 
                                                         cart={cart}
-                                                        setCart={setCart}
                                                     />
                                                 )
                                             })}
@@ -99,7 +97,6 @@ const App = () => {
                                     cart={cart}
                                     setCart={setCart}
                                 />
-                                {console.log(cart.products.length > 0)}
                                 <Button 
                                     onClick={(event) => updateStripePaymentIntent()}
                                     disabled={loadingPayment || cart.products.length === 0}

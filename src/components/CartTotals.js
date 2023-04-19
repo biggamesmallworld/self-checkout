@@ -1,11 +1,9 @@
 import React from 'react'
 
-const CartTotals = ({cart, setCart}) => {
+const CartTotals = ({cart}) => {
 
     return (
-        <>
-            <h3>Cart Total: €{cart.total}</h3>
-        </>
+        <h3>Cart Total: €{cart.total}</h3>
     )
 }
 

@@ -7,7 +7,7 @@ import {
 import { Button } from "react-bootstrap"
 
 
-const CheckoutForm = ({cart, setCart}) => {
+const CheckoutForm = () => {
     const stripe = useStripe()
     const elements = useElements()
 
